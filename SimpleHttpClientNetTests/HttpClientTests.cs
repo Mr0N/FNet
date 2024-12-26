@@ -31,7 +31,7 @@ namespace FXNet.Tests
         public void GetRequestTest()
         {
             using var client = new HttpSimpleClient();
-            var content = client.Get("http://localhost:80/test");
+            var content = client.Get("https://www.astera.com/");
             string html = content.ReadToString();
         }
     }
