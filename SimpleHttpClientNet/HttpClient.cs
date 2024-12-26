@@ -16,7 +16,7 @@ namespace FXNet
         DNSCore _core;
         Stream _stream;
         public int Timeouts { set; get; } = 20000;
-        public Stream CreateConnection(Uri uri)
+        private Stream CreateConnection(Uri uri)
         {
             if (_core.uri != null)
             {
@@ -36,11 +36,11 @@ namespace FXNet
             return _core.stream;
 
         }
-        public void Write(byte[] Buffer)
+        private void Write(byte[] Buffer)
         {
             _stream.Write(Buffer, 0, Buffer.Length);
         }
-        public List<byte> Read()
+        private List<byte> Read()
         {
             List<byte> listBytes = new List<byte>();
             byte[] buffer = new byte[1024];
