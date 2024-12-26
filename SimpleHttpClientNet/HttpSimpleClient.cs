@@ -11,7 +11,7 @@ using FXNet.Contents;
 
 namespace FXNet
 {
-   public class HttpClient:IDisposable
+   public class HttpSimpleClient:IDisposable
     {
         DNSCore _core;
         Stream _stream;
@@ -84,7 +84,7 @@ namespace FXNet
             this._stream.Close();
         }
 
-        public HttpClient()
+        public HttpSimpleClient()
         {
             _core = new DNSCore();
         }

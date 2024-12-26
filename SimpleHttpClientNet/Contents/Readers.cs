@@ -18,7 +18,7 @@ namespace FXNet.Contents
         //}
         public string ReadToString()
         {
-
+        
             return streamReader.ReadToEnd();
             //StringBuilder stringBuilder = new StringBuilder();
             //byte[] Buffer = new byte[1024];
@@ -32,7 +32,7 @@ namespace FXNet.Contents
         }
 
 
-        public Readers(Stream stream, Encoding encoding,int ReadTimeouts)
+        public Readers(Stream stream, Encoding encoding, int ReadTimeouts)
         {
             var streams = stream;
             streams.ReadTimeout = 20000;
