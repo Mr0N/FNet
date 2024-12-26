@@ -15,7 +15,7 @@ namespace FXNet.Contents
         }
         public Content(Stream stream,Encoding encoding,int ReadersTimeout):base(stream,encoding, ReadersTimeout)
         {
-
+          
         }
     }
 }

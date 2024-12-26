@@ -11,7 +11,7 @@ using FXNet.Contents;
 
 namespace FXNet
 {
-   public class HttpSimpleClient:IDisposable
+    public class HttpSimpleClient : IDisposable
     {
         DNSCore _core;
         Stream _stream;
@@ -36,46 +36,46 @@ namespace FXNet
             return _core.stream;
 
         }
-        private void Write(byte[] Buffer)
+        private void Write(MemoryStream memory)
         {
-            _stream.Write(Buffer, 0, Buffer.Length);
+            _stream.Write(memory.ToArray());
         }
-        private List<byte> Read()
-        {
-            List<byte> listBytes = new List<byte>();
-            byte[] buffer = new byte[1024];
-            while (_stream.Read(buffer, 0, buffer.Length) == 0)
-            {
-                listBytes.AddRange(buffer);
-            }
-            return listBytes;
-        }
+        //private List<byte> Read()
+        //{
+        //    List<byte> listBytes = new List<byte>();
+        //    byte[] buffer = new byte[1024];
+        //    while (_stream.Read(buffer, 0, buffer.Length) == 0)
+        //    {
+        //        listBytes.AddRange(buffer);
+        //    }
+        //    return listBytes;
+        //}
         public Content Get(string uri, string Version = "HTTP/1.1")
         {
-           return this.Send(HttpTypeRequest.GET, uri, null, null, Version);
+            return this.Send(HttpTypeRequest.GET, uri, null, null, Version);
         }
-        public Content Send(HttpTypeRequest typeRequest,string uri, Encoding encoding = null, byte[] data = null, string Version = "HTTP/1.1")
+        public Content Send(HttpTypeRequest typeRequest, string uri, Encoding encoding = null, byte[] data = null, string Version = "HTTP/1.1")
         {
-            return this.Send(typeRequest.ToString(),new Uri(uri),encoding, data, Version);
+            return this.Send(typeRequest.ToString(), new Uri(uri), encoding, data, Version);
         }
-        public Content Send(string typeRequest,Uri uri, Encoding encoding = null, byte[] data=null,string Version= "HTTP/1.1")
+        public Content Send(string typeRequest, Uri uri, Encoding encoding = null, byte[] data = null, string Version = "HTTP/1.1")
         {
             if (encoding == null) encoding = Encoding.ASCII;
-            List<byte> buffer = new List<byte>();
+            //  List<byte> buffer = new List<byte>();
+            using var buffer = new MemoryStream();
             _stream = CreateConnection(uri);
             Protocol protocol = new Protocol(typeRequest, uri.LocalPath, Version);
             HeadersRepository header = new Header();
             header.HeadersProtocol = protocol;
             header.Add("Host", uri.Host);
             var headers = (header as IHeader).GetHeaders();
-            buffer.AddRange(encoding.GetBytes(headers));
-            
-            if (data != null) buffer.AddRange(data);
-            Console.WriteLine(Encoding.ASCII.GetString(buffer.ToArray()));
-            Write(buffer.ToArray());
-            return new Content(_stream,encoding, Timeouts);
+            buffer.Write(encoding.GetBytes(headers));
+
+            if (data != null) buffer.Write(data);
+            Write(buffer);
+            return new Content(_stream, encoding, Timeouts);
         }
-        Content _content; 
+        Content _content;
         public void Dispose()
         {
             this._stream.Close();

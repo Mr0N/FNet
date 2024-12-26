@@ -18,8 +18,8 @@ namespace FXNet.Contents
         //}
         public string ReadToString()
         {
-        
-            return streamReader.ReadToEnd();
+            
+            return streamReader.ReadLine();
             //StringBuilder stringBuilder = new StringBuilder();
             //byte[] Buffer = new byte[1024];
             //int pos = -1;
