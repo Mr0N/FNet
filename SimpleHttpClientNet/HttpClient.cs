@@ -52,24 +52,22 @@ namespace FXNet
         }
         public Content Get(string uri, string Version = "HTTP/1.1")
         {
-           return this.Send(HttpType.GET, uri, null, null, Version);
+           return this.Send(HttpTypeRequest.GET, uri, null, null, Version);
         }
-        public Content Send(HttpType typeZapros,string uri, Encoding encoding = null, byte[] data = null, string Version = "HTTP/1.1")
+        public Content Send(HttpTypeRequest typeRequest,string uri, Encoding encoding = null, byte[] data = null, string Version = "HTTP/1.1")
         {
-            return this.Send(typeZapros.ToString(),new Uri(uri),encoding, data, Version);
+            return this.Send(typeRequest.ToString(),new Uri(uri),encoding, data, Version);
         }
-        public Content Send(string typeZapros,Uri uri, Encoding encoding = null, byte[] data=null,string Version= "HTTP/1.1")
+        public Content Send(string typeRequest,Uri uri, Encoding encoding = null, byte[] data=null,string Version= "HTTP/1.1")
         {
             if (encoding == null) encoding = Encoding.ASCII;
             List<byte> buffer = new List<byte>();
             _stream = CreateConnection(uri);
-            Protocol protocol = new Protocol(typeZapros, uri.LocalPath, Version);
+            Protocol protocol = new Protocol(typeRequest, uri.LocalPath, Version);
             HeadersRepository header = new Header();
             header.HeadersProtocol = protocol;
             header.Add("Host", uri.Host);
-           // header.Add("Connection", "keep-alive");
             var headers = (header as IHeader).GetHeaders();
-            Console.WriteLine(headers);
             buffer.AddRange(encoding.GetBytes(headers));
             
             if (data != null) buffer.AddRange(data);

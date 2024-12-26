@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FXNet
 {
-   public enum HttpType
+   public enum HttpTypeRequest
     {
         POST,GET
     }
