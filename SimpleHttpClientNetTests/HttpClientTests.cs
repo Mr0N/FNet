@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FXNet;
 using System;
 using System.Collections.Generic;
@@ -11,52 +11,23 @@ namespace FXNet.Tests
     [TestClass()]
     public class HttpClientTests
     {
-        [TestMethod()]
-        public void CreateConnectionTest()
+        
+        [ClassInitialize]
+        public static void Setup(TestContext context)
         {
-            Assert.Fail();
+            new TestServer().Run("http://localhost:5000");
+        }
+
+        [ClassCleanup]
+        public static void Cleanup()
+        {
+         
         }
 
         [TestMethod()]
-        public void WriteTest()
+        public void GetRequestTest()
         {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void ReadTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void GetTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void SendTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void SendTest1()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void DisposeTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void HttpClientTest()
-        {
-            Assert.Fail();
+            ;
         }
     }
 }

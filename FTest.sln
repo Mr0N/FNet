@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHttpClientNet", "Simp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHttpClientNetTests", "SimpleHttpClientNetTests\SimpleHttpClientNetTests.csproj", "{A9D68F7A-7EF9-4D82-98DF-9DF105157FC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApi", "TestApi\TestApi.csproj", "{B783A216-2F4A-405B-9AC4-F754B70BE839}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A9D68F7A-7EF9-4D82-98DF-9DF105157FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9D68F7A-7EF9-4D82-98DF-9DF105157FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9D68F7A-7EF9-4D82-98DF-9DF105157FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B783A216-2F4A-405B-9AC4-F754B70BE839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B783A216-2F4A-405B-9AC4-F754B70BE839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B783A216-2F4A-405B-9AC4-F754B70BE839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B783A216-2F4A-405B-9AC4-F754B70BE839}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

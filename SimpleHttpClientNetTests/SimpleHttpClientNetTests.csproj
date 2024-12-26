@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleHttpClientNet\SimpleHttpClientNet.csproj" />
+    <ProjectReference Include="..\TestApi\TestApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
