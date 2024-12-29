@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FXNet.HeaderRequest
+namespace SimpleHttpClientNet.Headers.Request
 {
     interface IHeader
     {

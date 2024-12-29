@@ -14,8 +14,10 @@ public class TestServer : IDisposable
         // Add services to the container.
 
         builder.Services.AddControllers();
+      
 
         _app = builder.Build();
+      
         _app.Use(async (context, next) =>
         {
 
@@ -26,6 +28,8 @@ public class TestServer : IDisposable
 
                 await context.Response.WriteAsync("Not Found");
             }
+            
+            //  context.Response.Headers.Append("Content-Length", context.Response.ContentLength?.ToString());
 
         });
 

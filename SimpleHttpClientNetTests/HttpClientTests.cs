@@ -31,8 +31,8 @@ namespace FXNet.Tests
         public void GetRequestTest()
         {
             using var client = new HttpSimpleClient();
-            var content = client.Get("https://google.com/");
-            string html = content.ReadToString();
+            var content = client.Get("http://localhost:80/Test");
+            string html = content.GetDataFromResponse();
         }
     }
 }

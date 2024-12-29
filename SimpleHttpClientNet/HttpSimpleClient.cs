@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using FXNet.Core;
-using FXNet.HeaderRequest;
 using FXNet.HeaderRequest.Protocols;
 using FXNet.Contents;
+using SimpleHttpClientNet.Headers.Request;
 
 namespace FXNet
 {
@@ -73,7 +73,7 @@ namespace FXNet
 
             if (data != null) buffer.Write(data);
             Write(buffer);
-            return new Content(_stream, encoding, Timeouts);
+            return new Content(_stream);
         }
         Content _content;
         public void Dispose()

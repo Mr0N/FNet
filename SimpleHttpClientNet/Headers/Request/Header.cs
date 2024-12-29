@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FXNet.HeaderRequest
+namespace SimpleHttpClientNet.Headers.Request
 {
     public class Header : HeadersRepository, IHeader
     {
         public string GetHeaders()
         {
-            string result = this.HeadersProtocol.GetHeaders() + "\r\n";
+            string result = HeadersProtocol.GetHeaders() + "\r\n";
             foreach (var item in this)
             {
                 foreach (var ele in item.Value)
                 {
-                    result += string.Format("{0}: {1}\r\n", item.Key , ele);
+                    result += string.Format("{0}: {1}\r\n", item.Key, ele);
                 }
                 result += "\r\n\r\n";
 
