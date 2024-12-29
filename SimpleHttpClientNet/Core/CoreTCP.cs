@@ -19,29 +19,22 @@ namespace FXNet.Core
         public int Port { private set; get; }
         public void Close()
         {
-           if (_tcpClient != null) _tcpClient.Close();
+            if (_tcpClient != null) _tcpClient.Close();
         }
-        private bool CreateTCP(string host,int port)
+        private void CreateTCP(string host, int port)
         {
             Close();
-            try
-            {
-                this.Port = port;
-                this._tcpClient = new TcpClient(host, port);
-            }
-            catch{ return false; }
-            return true;
+            this.Port = port;
+            this._tcpClient = new TcpClient(host, port);
+
         }
-        public NetworkStream Connection(string host,int port)
+        public NetworkStream Connection(string host, int port)
         {
-            Console.WriteLine(host +":"+port);
+            Console.WriteLine(host + ":" + port);
 
 
-            if (CreateTCP(host, port))
-            {
-                return _tcpClient.GetStream();
-            }
-            throw new Exception("Не вдалося створити зєднання");//Створити потом ошибку
+            CreateTCP(host, port);
+            return _tcpClient.GetStream();
         }
     }
 }

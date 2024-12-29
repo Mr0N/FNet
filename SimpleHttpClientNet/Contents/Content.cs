@@ -1,4 +1,5 @@
-﻿using SimpleHttpClientNet.Headers.Response;
+﻿using SimpleHttpClientNet.Contents;
+using SimpleHttpClientNet.Headers.Response;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,21 +9,26 @@ using System.Threading.Tasks;
 
 namespace FXNet.Contents
 {
+
     public class Content(Stream stream)
     {
-        private ResponseHeaders Headers { set; get; }
-        public string GetDataFromResponse()
+        public ResponseHeaders Headers { private set; get; }
+        public ContentResponse Response { private set; get; }
+
+        public Content ReadRequest()
         {
             Headers = ResponseHeaders.ParseHeaders(stream);
             Header contentLength = Headers.FirstOrDefault(a => a.Key == "Content-Length");
             long? length = long.TryParse(contentLength.Value, out var res) ? res : null;
-            if(length == null)
+            if (length == null)
             {
                 throw new Exception();
             }
             byte[] buffer = new byte[length.Value];
             stream.Read(buffer, 0, buffer.Length);
-            return Encoding.UTF8.GetString(buffer);
+            var memory = new MemoryStream(buffer);
+            Response = new ContentResponse() { streamContent = memory };
+            return this;
         }
 
     }
