@@ -12,7 +12,9 @@ namespace TestApi.Controllers
         [HttpGet]
         public IEnumerable<TestDto> TestRequest()
         {
-            yield return new TestDto("Hello, World!");
+            return new TestDto[] {
+                new TestDto("Hello, World!")
+            };
         }
     }
 }

@@ -29,7 +29,7 @@ public class TestServer : IDisposable
                 await context.Response.WriteAsync("Not Found");
             }
             
-            //  context.Response.Headers.Append("Content-Length", context.Response.ContentLength?.ToString());
+            context.Response.Headers.Append("Content-Length", context.Response.ContentLength?.ToString());
 
         });
 

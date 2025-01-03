@@ -1,4 +1,5 @@
 ﻿using SimpleHttpClientNet.Contents;
+using SimpleHttpClientNet.Contents.Abstrr;
 using SimpleHttpClientNet.Headers.Response;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,20 @@ namespace FXNet.Contents
     public class Content(Stream stream)
     {
         public ResponseHeaders Headers { private set; get; }
-        public ContentResponse Response { private set; get; }
+        public ResponseContentFromServer Response { private set; get; }
 
         public Content ReadRequest()
         {
             Headers = ResponseHeaders.ParseHeaders(stream);
-            Header contentLength = Headers.FirstOrDefault(a => a.Key == "Content-Length");
-            long? length = long.TryParse(contentLength.Value, out var res) ? res : null;
-            if (length == null)
+            if(Headers.FirstOrDefault(a => a.Key == "Transfer-Encoding")?.Value == "chunked")
             {
-                throw new Exception();
+                Response = new ContentResponseChunk() { streamContent = stream };
+                return this;
             }
+            Header contentLength = Headers.FirstOrDefault(a => a.Key == "Content-Length");
+            
+
+            long? length = long.TryParse(contentLength.Value, out var res) ? res : null;
             byte[] buffer = new byte[length.Value];
             stream.Read(buffer, 0, buffer.Length);
             var memory = new MemoryStream(buffer);

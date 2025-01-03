@@ -21,7 +21,7 @@ namespace FXNet.Tests
             {
                 try
                 {
-                    _server.Run("http://127.0.0.1:11");
+                    _server.Run("http://localhost:5000");
                 }
                 catch (Exception ex)
                 {
@@ -45,7 +45,7 @@ namespace FXNet.Tests
             Thread.Sleep(10_000);
             //Console.ReadKey();
             using var client = new HttpSimpleClient();
-            var content = client.Get("http://localhost:11/Test");
+            var content = client.Get("http://localhost:5000/Test");
             var response = content.ReadRequest();
             string text = response.Response.GetText();
             ;
