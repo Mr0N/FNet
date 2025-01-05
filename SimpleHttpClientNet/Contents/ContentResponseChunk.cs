@@ -48,7 +48,8 @@ namespace SimpleHttpClientNet.Contents
                 {
                     //  var read = new StreamReader(temp);
                     var size = Encoding.ASCII.GetString(ls.ToArray()).TrimEnd('\r', '\n');
-                    return int.TryParse(size, out var res) ? res : throw new Exception();
+                    return int.TryParse(size, System.Globalization.NumberStyles.HexNumber, null, out var res) ? res : throw new Exception("Invalid hex format");
+
                 }
                 if (data == -1) break;
 
