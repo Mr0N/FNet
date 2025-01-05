@@ -13,13 +13,15 @@ namespace SimpleHttpClientNet.Headers.Response
         public Protocol protocol { get; private set; }
         public static ResponseHeaders ParseHeaders(Stream stream)
         {
-            using var reader = new StreamReader(stream);
+            var hedersEnumerable = ReadLineFromASCII(stream);
+            using var en = hedersEnumerable.GetEnumerator();
+            //using var reader = new StreamReader(stream);
             var responseHeaders = new ResponseHeaders();
-            string firstLine = reader.ReadLine();//Parse the first line
+            en.MoveNext();//Parse the first line
             string temp = "";
-            do
+            while(en.MoveNext())
             {
-                var line = reader.ReadLine();
+                var line = en.Current;
 
 
                 if (string.IsNullOrEmpty(line))
@@ -33,9 +35,31 @@ namespace SimpleHttpClientNet.Headers.Response
                 responseHeaders.Add(new Header(arrayChars[0].Trim(' '), arrayChars[1].Trim(' ')));
 
 
-            } while (true);
+            }
             return responseHeaders;
         }
+        static IEnumerable<string> ReadLineFromASCII(Stream memory)
+        {
+            List<byte> buffer = new List<byte>(100);
+            byte lastChar = default;
+            //foreach (var b in bytes)
+            while (true)
+            {
+                byte b = (byte)memory.ReadByte();
+                if (b == -1)
+                {
+                    break;
+                }
 
+                buffer.Add(b);
+                if (lastChar == '\r' && b == '\n')
+                {
+
+                    yield return Encoding.ASCII.GetString(buffer.ToArray()).TrimEnd('\r','\n');
+                    buffer = new List<byte>(100);
+                }
+                lastChar = b;
+            }
+        }
     }
 }

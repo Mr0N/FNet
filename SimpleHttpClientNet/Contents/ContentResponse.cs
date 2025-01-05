@@ -11,10 +11,10 @@ namespace SimpleHttpClientNet.Contents
     {
         public override string GetText()
         {
-            var reader = new StreamReader(streamContent);
+            var reader = new StreamReader(Data);
             return reader.ReadToEnd();
         }
-        public override Stream streamContent { get; internal set; }
+        public override Stream Data { get; internal set; }
         internal ContentResponse()
         {
                     

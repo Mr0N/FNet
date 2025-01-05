@@ -11,20 +11,61 @@ namespace SimpleHttpClientNet.Contents
     {
         public override string GetText()
         {
-            var builder = new StringBuilder();
-          
+            string text = string.Concat(ReadChunks());
+            return text;
+        }
+        private IEnumerable<string> ReadChunks()
+        {
             while (true)
             {
-                byte[] buffer = new byte[1];
-                int qq = streamContent.ReadByte();
-               // string hex = Encoding.UTF8.GetString(buffer);
+                int sizeChunk = GetSizeChunk();
+                if (sizeChunk == 0)
+                    break;
+                string text = ReadFromChunk(sizeChunk);
+                yield return text;
             }
-            return builder.ToString();
         }
-        public override Stream streamContent { get; internal set; }
-        internal ContentResponseChunk()
+        private string ReadFromChunk(int size)
         {
+            byte[] buffer = new byte[size];
+            Data.Read(buffer, 0, buffer.Length);
+            if (!(Data.ReadByte() == '\r'))
+                throw new Exception();
+            if (!(Data.ReadByte() == '\n'))
+                throw new Exception();
+            return _encoding.GetString(buffer);
+        }
+        private int GetSizeChunk()
+        {
+            var ls = new List<byte>(16);
+            byte tempByte = default;
+            while (true)
+            {
 
+                byte data = (byte)Data.ReadByte();
+                ls.Add(data);
+                if (data == '\n' && tempByte == '\r')
+                {
+                    //  var read = new StreamReader(temp);
+                    var size = Encoding.ASCII.GetString(ls.ToArray()).TrimEnd('\r', '\n');
+                    return int.TryParse(size, out var res) ? res : throw new Exception();
+                }
+                if (data == -1) break;
+
+
+                tempByte = data;
+            }
+            throw new Exception();
+        }
+        public override Stream Data { get; internal set; }
+        Encoding _encoding;
+        internal ContentResponseChunk(Encoding encoding = null)
+        {
+            if (encoding == null)
+            {
+                encoding = Encoding.UTF8;
+            }
+            _encoding = encoding;
         }
     }
 }

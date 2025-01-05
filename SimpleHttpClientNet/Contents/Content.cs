@@ -21,7 +21,7 @@ namespace FXNet.Contents
             Headers = ResponseHeaders.ParseHeaders(stream);
             if(Headers.FirstOrDefault(a => a.Key == "Transfer-Encoding")?.Value == "chunked")
             {
-                Response = new ContentResponseChunk() { streamContent = stream };
+                Response = new ContentResponseChunk() { Data = stream };
                 return this;
             }
             Header contentLength = Headers.FirstOrDefault(a => a.Key == "Content-Length");
@@ -31,7 +31,7 @@ namespace FXNet.Contents
             byte[] buffer = new byte[length.Value];
             stream.Read(buffer, 0, buffer.Length);
             var memory = new MemoryStream(buffer);
-            Response = new ContentResponse() { streamContent = memory };
+            Response = new ContentResponse() { Data = memory };
             return this;
         }
 

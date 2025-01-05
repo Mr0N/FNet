@@ -9,6 +9,6 @@ namespace SimpleHttpClientNet.Contents.Abstrr
     public abstract class ResponseContentFromServer
     {
         public abstract string GetText();
-        public abstract Stream streamContent { get; internal set; }
+        public abstract Stream Data { get; internal set; }
     }
 }
