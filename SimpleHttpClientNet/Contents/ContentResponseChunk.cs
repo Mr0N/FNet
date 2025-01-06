@@ -44,10 +44,18 @@ namespace SimpleHttpClientNet.Contents
 
                 byte data = (byte)Data.ReadByte();
                 ls.Add(data);
+                if(ls.Count > 1000)
+                {
+                    throw new Exception("The server sends a chunk of incorrect size.");
+                }
                 if (data == '\n' && tempByte == '\r')
                 {
                     //  var read = new StreamReader(temp);
                     var size = Encoding.ASCII.GetString(ls.ToArray()).TrimEnd('\r', '\n');
+                    if(size.Contains(";"))//extension
+                    {
+                        size = size.Split(';')[0];
+                    }
                     return int.TryParse(size, System.Globalization.NumberStyles.HexNumber, null, out var res) ? res : throw new Exception("Invalid hex format");
 
                 }

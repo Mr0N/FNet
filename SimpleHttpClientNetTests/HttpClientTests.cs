@@ -21,7 +21,7 @@ namespace FXNet.Tests
             {
                 try
                 {
-                    _server.Run("http://localhost:5060");
+                    _server.Run("http://localhost:5063");
                 }
                 catch (Exception ex)
                 {
@@ -29,6 +29,7 @@ namespace FXNet.Tests
 
                 }
             });
+            ;
 
             ;
         }
@@ -45,7 +46,7 @@ namespace FXNet.Tests
             Thread.Sleep(20_000);
             //Console.ReadKey();
             using var client = new HttpSimpleClient();
-            var content = client.Get("http://localhost:5060/Test");
+            var content = client.Get("http://localhost:5063/home/test");
             var response = content.ReadRequest();
             string text = response.Response.GetText();
             ;

@@ -4,13 +4,12 @@ namespace TestApi.Controllers
 {
     public record TestDto(string text);
     [ApiController]
-    [Route("[controller]")]
-   
-    public class TestController : ControllerBase
+    [Route("home")]
+    public class HomeController : ControllerBase
     {
-     
-        [HttpGet]
-        public IEnumerable<TestDto> TestRequest()
+
+        [HttpGet("test")]
+        public IEnumerable<TestDto> Test()
         {
             return new TestDto[] {
                 new TestDto("Hello, World!")

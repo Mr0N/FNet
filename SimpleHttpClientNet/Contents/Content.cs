@@ -25,8 +25,6 @@ namespace FXNet.Contents
                 return this;
             }
             Header contentLength = Headers.FirstOrDefault(a => a.Key == "Content-Length");
-            
-
             long? length = long.TryParse(contentLength.Value, out var res) ? res : null;
             byte[] buffer = new byte[length.Value];
             stream.Read(buffer, 0, buffer.Length);

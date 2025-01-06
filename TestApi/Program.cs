@@ -1,3 +1,5 @@
+using TestApi.Controllers;
+
 new TestServer().Run("http://localhost:5102");
 
 public class TestServer : IDisposable
@@ -10,14 +12,21 @@ public class TestServer : IDisposable
     public void Run(string uri)
     {
         var builder = WebApplication.CreateBuilder();
-
+        builder.Services.Configure<RouteOptions>(options =>
+        {
+            options.LowercaseUrls = false; 
+            options.LowercaseQueryStrings = false; 
+            options.AppendTrailingSlash = false; 
+        });
         // Add services to the container.
 
-        builder.Services.AddControllers();
-      
+        builder.Services.AddControllers()
+            .AddApplicationPart(typeof(HomeController).Assembly);
+
 
         _app = builder.Build();
-      
+
+        _app.MapControllers();
         _app.Use(async (context, next) =>
         {
 
@@ -42,8 +51,21 @@ public class TestServer : IDisposable
 
         /// _app.UseAuthorization();
 
-        _app.MapControllers();
+        _app.MapGet("/routes", (HttpContext httpContext) =>
+        {
+            var endpoints = httpContext.RequestServices.GetRequiredService<EndpointDataSource>();
 
+            var routeList = endpoints.Endpoints
+                .OfType<RouteEndpoint>()
+                .Select(endpoint => new
+                {
+                    RoutePattern = endpoint.RoutePattern.RawText,
+                    HttpMethods = endpoint.Metadata.OfType<HttpMethodMetadata>().FirstOrDefault()?.HttpMethods ?? new List<string> { "ANY" }
+                })
+                .ToList();
+
+            return Results.Ok(routeList);
+        });
         _app.Run(uri);
 
 
