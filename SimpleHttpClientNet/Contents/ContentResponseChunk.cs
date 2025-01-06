@@ -29,10 +29,12 @@ namespace SimpleHttpClientNet.Contents
         {
             byte[] buffer = new byte[size];
             Data.Read(buffer, 0, buffer.Length);
-            if (!(Data.ReadByte() == '\r'))
-                throw new Exception();
-            if (!(Data.ReadByte() == '\n'))
-                throw new Exception();
+            //if (!(Data.ReadByte() == '\r'))
+            //    throw new Exception();
+            //if (!(Data.ReadByte() == '\n'))
+            //    throw new Exception();
+            Data.ReadByte();
+            Data.ReadByte();
             return _encoding.GetString(buffer);
         }
         private int GetSizeChunk()

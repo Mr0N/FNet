@@ -11,9 +11,8 @@ namespace TestApi.Controllers
         [HttpGet("test")]
         public IEnumerable<TestDto> Test()
         {
-            return new TestDto[] {
-                new TestDto("Hello, World!")
-            };
+            return Enumerable.Range(0, 20_000)
+                             .Select((a,index) => new TestDto(index.ToString()));
         }
     }
 }

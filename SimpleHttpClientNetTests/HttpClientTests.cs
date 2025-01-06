@@ -30,7 +30,7 @@ namespace FXNet.Tests
                 }
             });
             ;
-
+            Thread.Sleep(20_000);
             ;
         }
 
@@ -43,7 +43,7 @@ namespace FXNet.Tests
         [TestMethod()]
         public void GetRequestTest()
         {
-            Thread.Sleep(20_000);
+            
             //Console.ReadKey();
             using var client = new HttpSimpleClient();
             var content = client.Get("http://localhost:5063/home/test");
