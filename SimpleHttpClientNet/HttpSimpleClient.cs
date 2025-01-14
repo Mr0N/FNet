@@ -8,6 +8,7 @@ using FXNet.Core;
 using FXNet.HeaderRequest.Protocols;
 using FXNet.Contents;
 using SimpleHttpClientNet.Headers.Request;
+using SimpleHttpClientNet.Logging;
 
 namespace FXNet
 {
@@ -18,6 +19,7 @@ namespace FXNet
         public int Timeouts { set; get; } = 20000;
         private Stream CreateConnection(Uri uri)
         {
+            Log.Write($"Create connection to:{uri}");
             if (_core.uri != null)
             {
                 if ((_core.uri.Port != uri.Port) && (_core.uri.Host != uri.Host))
@@ -60,6 +62,9 @@ namespace FXNet
         }
         public Content Send(string typeRequest, Uri uri, Encoding encoding = null, byte[] data = null, string Version = "HTTP/1.1")
         {
+            Log.Write($"Type Request:{typeRequest}" +
+                $"Uri:{uri}" +
+                $"Version http:{Version}");
             if (encoding == null) encoding = Encoding.ASCII;
             //  List<byte> buffer = new List<byte>();
             using var buffer = new MemoryStream();

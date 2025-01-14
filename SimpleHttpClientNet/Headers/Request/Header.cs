@@ -22,6 +22,7 @@ namespace SimpleHttpClientNet.Headers.Request
 
 
             }
+            Logging.Log.Write($"headers\n\r:{result}");
             return result;
         }
         public Header()

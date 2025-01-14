@@ -18,8 +18,9 @@ namespace SimpleHttpClientNet.Headers.Response
             //using var reader = new StreamReader(stream);
             var responseHeaders = new ResponseHeaders();
             en.MoveNext();//Parse the first line
-            string temp = "";
-            while(en.MoveNext())
+            string temp = en.Current;
+            //responseHeaders.protocol = Protocol.Parse(temp);
+            while (en.MoveNext())
             {
                 var line = en.Current;
 

@@ -16,7 +16,7 @@ namespace FXNet.Contents
         public ResponseHeaders Headers { private set; get; }
         public ResponseContentFromServer Response { private set; get; }
 
-        public Content ReadRequest()
+        public Content ReadResponse()
         {
             Headers = ResponseHeaders.ParseHeaders(stream);
             if(Headers.FirstOrDefault(a => a.Key == "Transfer-Encoding")?.Value == "chunked")

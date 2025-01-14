@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SimpleHttpClientNet.Logging;
+using SimpleHttpClientNet.Logging.Abstraction;
 
 namespace FXNet.Tests
 {
@@ -16,6 +18,7 @@ namespace FXNet.Tests
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
+            Log.SetProviderLogging(new DebugLog());
             _server = new TestServer();
             Task.Run(() =>
             {
@@ -47,7 +50,7 @@ namespace FXNet.Tests
             //Console.ReadKey();
             using var client = new HttpSimpleClient();
             var content = client.Get("http://localhost:5063/home/test");
-            var response = content.ReadRequest();
+            var response = content.ReadResponse();
             string text = response.Response.GetText();
             ;
             ;
